@@ -1,0 +1,42 @@
+services:
+  todo-elph:
+    build:
+      context: .
+      additional_contexts:
+        sdk: ../elph-bot-sdks/typescript
+    env_file: .env.elph
+    environment:
+      HTTP_ADDR: :3000
+      DATA_PATH: /app/data/todo.sqlite
+      FILE_STORAGE_PATH: /app/storage
+    ports:
+      - "3001:3000"
+    volumes:
+      - todo-elph-data:/app/data
+      - todo-elph-storage:/app/storage
+    restart: unless-stopped
+    profiles: [elph]
+
+  todo-telegram:
+    build:
+      context: .
+      additional_contexts:
+        sdk: ../elph-bot-sdks/typescript
+    env_file: .env.telegram
+    environment:
+      HTTP_ADDR: :3000
+      DATA_PATH: /app/data/todo.sqlite
+      FILE_STORAGE_PATH: /app/storage
+    ports:
+      - "3002:3000"
+    volumes:
+      - todo-telegram-data:/app/data
+      - todo-telegram-storage:/app/storage
+    restart: unless-stopped
+    profiles: [telegram]
+
+volumes:
+  todo-elph-data:
+  todo-elph-storage:
+  todo-telegram-data:
+  todo-telegram-storage:

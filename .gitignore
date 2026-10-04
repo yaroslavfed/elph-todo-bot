@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.elph
+.env.telegram
+data/
+storage/
+*.log
