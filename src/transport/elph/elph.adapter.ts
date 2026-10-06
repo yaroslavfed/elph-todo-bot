@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ElphBotService } from '@yaroslavfed/bot-sdk-nestjs';
+import { ElphBotService } from '@elph/bot-sdk-nestjs';
 import type { BotTransport, CommandButton, Keyboard, KeyboardButton, OutgoingFile } from '../types.js';
 
 @Injectable()

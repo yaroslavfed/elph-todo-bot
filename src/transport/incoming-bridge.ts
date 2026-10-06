@@ -1,4 +1,4 @@
-import type { BotUpdate as ElphUpdate } from '@yaroslavfed/bot-sdk';
+import type { BotUpdate as ElphUpdate } from '@elph/bot-sdk';
 import type { Update as TelegramUpdate } from 'grammy/types';
 import type { IncomingBotEvent } from './types.js';
 

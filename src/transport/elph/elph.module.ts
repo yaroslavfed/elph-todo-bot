@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ElphBotModule } from '@yaroslavfed/bot-sdk-nestjs';
+import { ElphBotModule } from '@elph/bot-sdk-nestjs';
 import { readConfig } from '../../config.js';
 import { BotUpdateHandler } from '../../bot-update.handler.js';
 import { BOT_TRANSPORT } from '../types.js';

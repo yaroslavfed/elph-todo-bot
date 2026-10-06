@@ -40,8 +40,8 @@ BOT_PLATFORM=telegram
 
 Для интеграции с ELPh используется:
 
-- `@yaroslavfed/bot-sdk`
-- `@yaroslavfed/bot-sdk-nestjs`
+- `@elph/bot-sdk`
+- `@elph/bot-sdk-nestjs`
 
 Репозиторий SDK:
 
@@ -945,13 +945,13 @@ Telegram:
 Для NestJS используется пакет:
 
 ```text
-@yaroslavfed/bot-sdk-nestjs
+@elph/bot-sdk-nestjs
 ```
 
 Core SDK:
 
 ```text
-@yaroslavfed/bot-sdk
+@elph/bot-sdk
 ```
 
 ELPh SDK предоставляет основные операции:
@@ -1262,7 +1262,7 @@ bot routers/
 не должны импортировать:
 
 ```text
-@yaroslavfed/bot-sdk
+@elph/bot-sdk
 Telegram SDK
 ```
 

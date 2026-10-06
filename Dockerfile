@@ -1,26 +1,29 @@
 # syntax=docker/dockerfile:1.7
-FROM node:24-bookworm-slim AS build
+FROM nexus.eltex.loc/node:24.15.0 AS build
 
 WORKDIR /app
 
-COPY --from=sdk artifacts/bot-sdk.tgz artifacts/bot-sdk-nestjs.tgz /tmp/sdk/
-COPY package.json ./
-RUN npm pkg set "dependencies.@yaroslavfed/bot-sdk=file:/tmp/sdk/bot-sdk.tgz" "dependencies.@yaroslavfed/bot-sdk-nestjs=file:/tmp/sdk/bot-sdk-nestjs.tgz" \
-  && npm install
+RUN corepack enable
+
+COPY package.json yarn.lock .npmrc .yarnrc ./
+RUN yarn install --frozen-lockfile
 
 COPY tsconfig.json ./
 COPY src ./src
 RUN npm run build
 
-FROM node:24-bookworm-slim AS runtime
+FROM nexus.eltex.loc/node:24.15.0-slim AS runtime
 
-ENV NODE_ENV=production
+ENV NODE_ENV=production \
+    NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/EltexRootCA.crt
 WORKDIR /app
 
-COPY --from=sdk artifacts/bot-sdk.tgz artifacts/bot-sdk-nestjs.tgz /tmp/sdk/
-COPY package.json ./
-RUN npm pkg set "dependencies.@yaroslavfed/bot-sdk=file:/tmp/sdk/bot-sdk.tgz" "dependencies.@yaroslavfed/bot-sdk-nestjs=file:/tmp/sdk/bot-sdk-nestjs.tgz" \
-  && npm install --omit=dev
+COPY certificates/EltexRootCA.crt /usr/local/share/ca-certificates/EltexRootCA.crt
+
+RUN corepack enable
+
+COPY package.json yarn.lock .npmrc .yarnrc ./
+RUN yarn install --frozen-lockfile --production
 
 COPY --from=build --chown=node:node /app/dist ./dist
 RUN mkdir /app/data /app/storage && chown node:node /app/data /app/storage

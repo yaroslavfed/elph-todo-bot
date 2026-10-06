@@ -4,13 +4,7 @@
 
 Один образ запускает независимые экземпляры для ELPh и Telegram. Каждый сервис хранит SQLite-базу и вложения в собственных Docker volumes.
 
-Для Docker-сборки используются локальные архивы SDK из соседнего каталога `../elph-bot-sdks/typescript`. Перед первой сборкой и после каждого изменения SDK выполни:
-
-```powershell
-Push-Location ..\elph-bot-sdks\typescript
-yarn pack:local
-Pop-Location
-```
+Docker загружает SDK-пакеты `@elph/bot-sdk` и `@elph/bot-sdk-nestjs` из Nexus согласно `package.json` и `yarn.lock`.
 
 Подготовь конфигурации:
 

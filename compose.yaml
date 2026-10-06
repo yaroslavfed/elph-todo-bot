@@ -2,15 +2,13 @@ services:
   todo-elph:
     build:
       context: .
-      additional_contexts:
-        sdk: ../elph-bot-sdks/typescript
+      network: host
     env_file: .env.elph
     environment:
-      HTTP_ADDR: :3000
+      HTTP_ADDR: :3001
       DATA_PATH: /app/data/todo.sqlite
       FILE_STORAGE_PATH: /app/storage
-    ports:
-      - "3001:3000"
+    network_mode: host
     volumes:
       - todo-elph-data:/app/data
       - todo-elph-storage:/app/storage
@@ -20,8 +18,7 @@ services:
   todo-telegram:
     build:
       context: .
-      additional_contexts:
-        sdk: ../elph-bot-sdks/typescript
+      network: host
     env_file: .env.telegram
     environment:
       HTTP_ADDR: :3000
