@@ -5,5 +5,7 @@ import { setIncomingReceiver } from '../incoming-bridge.js';
 @Injectable()
 export class ElphBridge implements OnModuleInit {
   public constructor(private readonly handler: BotUpdateHandler) {}
-  public onModuleInit(): void { setIncomingReceiver((event) => this.handler.handle(event)); }
+  public onModuleInit(): void {
+    setIncomingReceiver((event) => this.handler.handle(event));
+  }
 }

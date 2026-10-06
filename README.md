@@ -1,8 +1,8 @@
-# ToDo Bot
+# ToDo Bot для ELPh Chat
+
+Бот принимает webhook-события ELPh Chat, хранит задачи в SQLite и работает с вложениями.
 
 ## Docker
-
-Один образ запускает независимые экземпляры для ELPh и Telegram. Каждый сервис хранит SQLite-базу и вложения в собственных Docker volumes.
 
 Для Docker-сборки используются локальные архивы SDK из соседнего каталога `../elph-bot-sdks/typescript`. Перед первой сборкой и после каждого изменения SDK выполни:
 
@@ -12,35 +12,28 @@ yarn pack:local
 Pop-Location
 ```
 
-Подготовь конфигурации:
+Подготовь конфигурацию:
 
 ```powershell
 Copy-Item .env.elph.example .env.elph
-Copy-Item .env.telegram.example .env.telegram
 ```
 
-Для `TELEGRAM_WEBHOOK_SECRET` используй строку длиной от 1 до 256 символов из `A-Z`, `a-z`, `0-9`, `_` и `-`. Например, в PowerShell:
+В `ELPH_WEBHOOK_URL` укажи публичный адрес `https://<host>/webhooks/elph`. Внешний reverse proxy должен направлять его на порт `3001` хоста.
+
+Запуск:
 
 ```powershell
-[Convert]::ToHexString([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32)).ToLowerInvariant()
+docker compose up --build -d
 ```
 
-В `ELPH_WEBHOOK_URL` укажи публичный адрес `https://<host>/webhooks/elph`. Для Telegram используй `https://<host>/webhooks/telegram`. Внешний reverse proxy должен направлять их соответственно на порты `3001` и `3002` хоста.
-
-Запусти оба экземпляра:
+Остановка без удаления данных:
 
 ```powershell
-docker compose --profile elph --profile telegram up --build -d
+docker compose down
 ```
 
-Остановить экземпляры без удаления данных:
+Удаление SQLite-базы и вложений:
 
 ```powershell
-docker compose --profile elph --profile telegram down
-```
-
-Удалить также SQLite-базы и вложения:
-
-```powershell
-docker compose --profile elph --profile telegram down --volumes
+docker compose down --volumes
 ```

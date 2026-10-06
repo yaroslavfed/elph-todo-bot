@@ -7,7 +7,19 @@ import { BotUiService } from './bot-ui.service.js';
 
 @Global()
 @Module({
-  providers: [DatabaseService, TasksRepository, ConversationService, FileStorageService, BotUiService],
-  exports: [DatabaseService, TasksRepository, ConversationService, FileStorageService, BotUiService],
+  providers: [
+    DatabaseService,
+    TasksRepository,
+    ConversationService,
+    FileStorageService,
+    BotUiService,
+  ],
+  exports: [
+    DatabaseService,
+    TasksRepository,
+    ConversationService,
+    FileStorageService,
+    BotUiService,
+  ],
 })
 export class SharedModule {}

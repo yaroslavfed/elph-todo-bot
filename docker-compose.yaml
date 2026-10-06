@@ -1,0 +1,23 @@
+services:
+  todo-elph:
+    build:
+      context: .
+      additional_contexts:
+        sdk: ../elph-bot-sdks/typescript
+    env_file: .env.elph
+    environment:
+      HTTP_ADDR: :3000
+      DATA_PATH: /app/data/todo.sqlite
+      FILE_STORAGE_PATH: /app/storage
+      NODE_EXTRA_CA_CERTS: /app/certs/host-ca-certificates.crt
+    ports:
+      - '3001:3000'
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/app/certs/host-ca-certificates.crt:ro
+      - todo-elph-data:/app/data
+      - todo-elph-storage:/app/storage
+    restart: unless-stopped
+
+volumes:
+  todo-elph-data:
+  todo-elph-storage:

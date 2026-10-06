@@ -12,17 +12,20 @@
     "lint": "node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@elph/bot-sdk": "file:../elph-bot-sdks/typescript/artifacts/bot-sdk.tgz",
+    "@elph/bot-sdk-nestjs": "file:../elph-bot-sdks/typescript/artifacts/bot-sdk-nestjs.tgz",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
-    "@yaroslavfed/bot-sdk": "0.1.0",
-    "@yaroslavfed/bot-sdk-nestjs": "0.1.0",
-    "grammy": "^1.38.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
+  "resolutions": {
+    "@elph/bot-sdk": "file:../elph-bot-sdks/typescript/artifacts/bot-sdk.tgz"
+  },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "prettier": "^3.9.9",
     "tsx": "^4.20.0",
     "typescript": "^5.7.3"
   }

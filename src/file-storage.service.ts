@@ -18,7 +18,16 @@ export class FileStorageService {
     const temporary = `${target}.${randomUUID()}.tmp`;
     writeFileSync(temporary, input.bytes, { flag: 'wx' });
     renameSync(temporary, target);
-    return { id, taskId, originalName: input.filename, mimeType: input.mimeType ?? 'application/octet-stream', size: input.bytes.byteLength, storageKey };
+    return {
+      id,
+      taskId,
+      originalName: input.filename,
+      mimeType: input.mimeType ?? 'application/octet-stream',
+      size: input.bytes.byteLength,
+      storageKey,
+    };
   }
-  public read(attachment: TaskAttachment): Uint8Array { return readFileSync(join(this.root, attachment.storageKey)); }
+  public read(attachment: TaskAttachment): Uint8Array {
+    return readFileSync(join(this.root, attachment.storageKey));
+  }
 }

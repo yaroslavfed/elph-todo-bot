@@ -20,9 +20,19 @@ export class DatabaseService implements OnApplicationShutdown {
   }
   public transaction<T>(action: () => T): T {
     this.database.exec('BEGIN IMMEDIATE');
-    try { const result = action(); this.database.exec('COMMIT'); return result; }
-    catch (error) { this.database.exec('ROLLBACK'); throw error; }
+    try {
+      const result = action();
+      this.database.exec('COMMIT');
+      return result;
+    } catch (error) {
+      this.database.exec('ROLLBACK');
+      throw error;
+    }
   }
-  public onApplicationShutdown(): void { this.close(); }
-  public close(): void { if (this.database.isOpen) this.database.close(); }
+  public onApplicationShutdown(): void {
+    this.close();
+  }
+  public close(): void {
+    if (this.database.isOpen) this.database.close();
+  }
 }
