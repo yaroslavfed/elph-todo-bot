@@ -15,8 +15,8 @@
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
-    "@yaroslavfed/bot-sdk": "0.1.0",
-    "@yaroslavfed/bot-sdk-nestjs": "0.1.0",
+    "@elph/bot-sdk": "0.2.1-rc.0",
+    "@elph/bot-sdk-nestjs": "0.2.1-rc.0",
     "grammy": "^1.38.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

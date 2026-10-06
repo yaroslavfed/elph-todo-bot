@@ -5,6 +5,7 @@ import { DatabaseService } from './database.service.js';
 import { ConversationService } from './conversation.service.js';
 import { FileStorageService } from './file-storage.service.js';
 import { BotUiService } from './bot-ui.service.js';
+import { BotInterfaceService } from './bot-interface.service.js';
 import type { TaskAttachment } from './tasks/task.types.js';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class BotUpdateHandler {
     private readonly conversation: ConversationService,
     private readonly storage: FileStorageService,
     private readonly ui: BotUiService,
+    private readonly botInterface: BotInterfaceService,
   ) {}
 
   public async handle(event: IncomingBotEvent): Promise<void> {
@@ -40,16 +42,37 @@ export class BotUpdateHandler {
     this.conversation.clear(event.userKey, event.chatKey);
     await this.showTask(event.chatKey, event.id, task.id, event.userKey, true);
   }
-  private async command(event: Extract<IncomingBotEvent, { type: 'message' }>, command: string): Promise<void> {
+  private async command(
+    event: Pick<IncomingBotEvent, 'id' | 'userKey' | 'chatKey'>,
+    command: string,
+  ): Promise<void> {
     if (command === '/start') { this.mark(event.id); await this.reply(event, 'Привет! Я ToDo Bot.\n\nЯ сохраняю задачи и файлы, показываю активные и выполненные задачи. Создай задачу командой /new или кнопкой «➕ Новая задача».'); return; }
     if (command === '/new') { this.mark(event.id); this.conversation.set(event.userKey, event.chatKey, { type: 'AWAITING_TASK_TITLE' }); await this.reply(event, 'Напиши название новой задачи.'); return; }
     if (command === '/tasks') { this.mark(event.id); await this.showList(event, 'ACTIVE'); return; }
     if (command === '/done') { this.mark(event.id); await this.showList(event, 'DONE'); return; }
-    if (command === '/help') { this.mark(event.id); await this.reply(event, 'ToDo Bot\n\n/new — создать задачу\n/tasks — показать активные задачи\n/done — показать выполненные задачи\n/export — экспортировать задачи\n/help — помощь'); return; }
+    if (command === '/menu') {
+      this.mark(event.id);
+      await this.transport.sendKeyboard(event.chatKey, `${event.id}:menu`, this.ui.allActions(), 'Все действия:');
+      return;
+    }
+    if (command === '/settings') {
+      this.mark(event.id);
+      await this.transport.sendKeyboard(event.chatKey, `${event.id}:settings`, this.ui.settings(), 'Выбери вид меню:');
+      return;
+    }
+    if (command === '/help') { this.mark(event.id); await this.reply(event, 'ToDo Bot\n\n/new — создать задачу\n/tasks — показать активные задачи\n/done — показать выполненные задачи\n/export — экспортировать задачи\n/menu — все действия\n/settings — настроить вид меню\n/help — помощь\n\nНастройка вида меню применяется ко всему экземпляру бота.'); return; }
     if (command === '/export') { this.mark(event.id); const tasks = this.repository.list(event.userKey, 'ACTIVE').concat(this.repository.list(event.userKey, 'DONE')); const bytes = Buffer.from(JSON.stringify({ tasks }, null, 2)); await this.transport.sendFile(event.chatKey, `${event.id}:export`, { filename: 'todo-export.json', mimeType: 'application/json', bytes, caption: 'Экспорт задач готов.' }); return; }
     this.mark(event.id); await this.reply(event, 'Неизвестная команда.\n\nИспользуй /help, чтобы посмотреть доступные команды.');
   }
   private async handleInline(event: Extract<IncomingBotEvent, { type: 'inline-action' }>): Promise<void> {
+    if (event.command.startsWith('/')) return this.command(event, event.command);
+    const layout = /^ui:layout:(compact|expanded)$/.exec(event.command);
+    if (layout) {
+      await this.botInterface.apply(layout[1] as 'compact' | 'expanded');
+      this.mark(event.id);
+      await this.reply(event, `Вид меню изменён на ${layout[1] === 'compact' ? 'компактный' : 'расширенный'} для этого экземпляра бота.`);
+      return;
+    }
     if (event.command === 'task:new') { this.mark(event.id); this.conversation.set(event.userKey, event.chatKey, { type: 'AWAITING_TASK_TITLE' }); await this.reply(event, 'Напиши название новой задачи.'); return; }
     if (event.command === 'tasks:refresh') { this.mark(event.id); await this.showList(event, 'ACTIVE'); return; }
     if (event.command === 'tasks:done') { this.mark(event.id); await this.showList(event, 'DONE'); return; }

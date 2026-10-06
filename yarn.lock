@@ -7,6 +7,18 @@
   resolved "https://registry.yarnpkg.com/@borewit/text-codec/-/text-codec-0.2.2.tgz#75025f735c0983b3a871668804a57387e3649375"
   integrity sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==
 
+"@elph/bot-sdk-nestjs@0.2.1-rc.0":
+  version "0.2.1-rc.0"
+  resolved "https://nexus.eltex.loc:8443/repository/npm-elph/@elph/bot-sdk-nestjs/-/bot-sdk-nestjs-0.2.1-rc.0.tgz#5b42252c6df3bd985f566053bff5eaa736a8f819"
+  integrity sha512-kljpGBgtnrFrmyFYbgzaKC5y8toONOroyQ8DlY7txtHyIAhPs1mqA5U6R18xmEt8k1JF2um/JS9JCjcPNUTAxw==
+  dependencies:
+    "@elph/bot-sdk" "0.2.1-rc.0"
+
+"@elph/bot-sdk@0.2.1-rc.0":
+  version "0.2.1-rc.0"
+  resolved "https://nexus.eltex.loc:8443/repository/npm-elph/@elph/bot-sdk/-/bot-sdk-0.2.1-rc.0.tgz#36e0c9367b13a4cae6a770af17d1aff30bd86629"
+  integrity sha512-tKIeR8J8aVow/qNqhq2gHfk90KZhFG12h/+6z+MlX0Bvy8othQzYT7Y/Fo8v+bv6z7802ZAMSwb4k+/7Jro2MQ==
+
 "@esbuild/aix-ppc64@0.28.2":
   version "0.28.2"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.28.2.tgz#bf6e10303bcf2e7c686975fa52f937ec2728d8bc"
@@ -199,18 +211,6 @@
   integrity sha512-aS3/DG0oM05K0RIXXP+hKjinGG5IgSSVGzswZxW3O0sS3pH4/fycXundUC9XsszgKCk4gHXylTEK6hyFxVxnoQ==
   dependencies:
     undici-types ">=7.24.0 <7.24.7"
-
-"@yaroslavfed/bot-sdk-nestjs@0.1.0":
-  version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@yaroslavfed/bot-sdk-nestjs/0.1.0/53912ac3f79db217ce4fe76a26c9beb65160c152#53912ac3f79db217ce4fe76a26c9beb65160c152"
-  integrity sha512-xG8JIKMn9fOUxyCiG0efoiyQCSKmp8XSrQhq8KRDh86n2gU1aPKcCf/L/OoqRoech5fSfLwXph/734HJH98pbA==
-  dependencies:
-    "@yaroslavfed/bot-sdk" "0.1.0"
-
-"@yaroslavfed/bot-sdk@0.1.0":
-  version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@yaroslavfed/bot-sdk/0.1.0/357776c74c97fdb7b4ba135e119152f9043f7169#357776c74c97fdb7b4ba135e119152f9043f7169"
-  integrity sha512-89pB5SK07ms4uugLScwDG79UEKxkvs6uMu1hxJWlgRyWkzekvuTI3TH+jnenkx8JYsL5JQqp5aFA+XnWaHHTWA==
 
 abort-controller@^3.0.0:
   version "3.0.0"

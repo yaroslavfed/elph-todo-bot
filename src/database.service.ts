@@ -15,6 +15,7 @@ export class DatabaseService implements OnApplicationShutdown {
       CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, user_key TEXT NOT NULL, chat_key TEXT NOT NULL, title TEXT NOT NULL, status TEXT NOT NULL, created_at TEXT NOT NULL, completed_at TEXT);
       CREATE TABLE IF NOT EXISTS task_attachments (id TEXT PRIMARY KEY, task_id INTEGER NOT NULL REFERENCES tasks(id) ON DELETE CASCADE, original_name TEXT NOT NULL, mime_type TEXT NOT NULL, size INTEGER NOT NULL, storage_key TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS processed_events (id TEXT PRIMARY KEY, processed_at TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS bot_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
       CREATE INDEX IF NOT EXISTS tasks_user_status ON tasks(user_key, status, id);
     `);
   }
