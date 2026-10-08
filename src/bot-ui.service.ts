@@ -120,7 +120,7 @@ export class BotUiService {
   private allActionsButton(): KeyboardButton {
     return {
       text: '☰ Все действия',
-      command: '/menu',
+      command: '',
       children: {
         rows: [
           [{ text: '➕ Создать новую задачу', command: '/new' }],

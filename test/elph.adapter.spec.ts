@@ -50,7 +50,7 @@ test('preserves nested keyboard children in ELPh requests', async () => {
         buttons: [
           {
             text: '☰ Все действия',
-            command: '/menu',
+            command: '',
             children: {
               rows: [
                 { buttons: [{ text: '➕ Создать новую задачу', command: '/new' }] },
@@ -66,4 +66,18 @@ test('preserves nested keyboard children in ELPh requests', async () => {
       },
     ],
   });
+});
+
+test('uses all supported command and nested-menu button combinations', () => {
+  const ui = new BotUiService();
+  const executeOnly = ui.listActions().rows[1]![0]!;
+  const executeAndNavigate = ui.listActions().rows[0]![0]!;
+  const navigateOnly = ui.profile('compact').replyKeyboard.rows[1]![0]!;
+
+  assert.notEqual(executeOnly.command, '');
+  assert.equal(executeOnly.children, undefined);
+  assert.notEqual(executeAndNavigate.command, '');
+  assert.notEqual(executeAndNavigate.children, undefined);
+  assert.equal(navigateOnly.command, '');
+  assert.notEqual(navigateOnly.children, undefined);
 });
