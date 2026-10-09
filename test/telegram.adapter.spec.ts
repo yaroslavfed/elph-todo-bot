@@ -50,6 +50,9 @@ test('flattens nested keyboards without registering a webhook during interface u
       reply_markup: {
         keyboard: [
           ['➕ Новая задача'],
+          ['📋 Активные задачи'],
+          ['✅ Выполненные задачи'],
+          ['🔄 Обновить активные задачи'],
           ['➕ Создать новую задачу'],
           ['📋 Показать активные задачи'],
           ['✅ Показать выполненные задачи'],
@@ -67,6 +70,12 @@ test('flattens nested keyboards without registering a webhook during interface u
           [{ text: '✅ Выполненные задачи', callback_data: '/done' }],
           [{ text: '🔄 Обновить активные задачи', callback_data: 'tasks:refresh' }],
           [{ text: '➕ Новая задача', callback_data: 'task:new' }],
+          [{ text: '➕ Создать новую задачу', callback_data: '/new' }],
+          [{ text: '📋 Показать активные задачи', callback_data: '/tasks' }],
+          [{ text: '✅ Показать выполненные задачи', callback_data: '/done' }],
+          [{ text: '📤 Экспортировать все задачи в JSON', callback_data: '/export' }],
+          [{ text: '⚙️ Настроить вид меню', callback_data: '/settings' }],
+          [{ text: 'ℹ️ Помощь по работе с ToDo Bot', callback_data: '/help' }],
         ],
       },
     });

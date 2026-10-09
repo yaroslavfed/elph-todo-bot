@@ -25,7 +25,7 @@ export class BotUiService {
   }
 
   public allActions(): Keyboard {
-    return this.allActionsButton().children!;
+    return this.listActions();
   }
 
   public taskCard(task: Task, attachments: TaskAttachment[]): { text: string; keyboard: Keyboard } {
@@ -53,20 +53,9 @@ export class BotUiService {
   public listActions(): Keyboard {
     return {
       rows: [
-        [
-          {
-            text: '📋 Просмотр задач',
-            command: '/tasks',
-            children: {
-              rows: [
-                [{ text: '📋 Активные задачи', command: '/tasks' }],
-                [{ text: '✅ Выполненные задачи', command: '/done' }],
-                [{ text: '🔄 Обновить активные задачи', command: 'tasks:refresh' }],
-              ],
-            },
-          },
-        ],
+        [this.tasksButton()],
         [{ text: '➕ Новая задача', command: 'task:new' }],
+        [this.allActionsButton()],
       ],
     };
   }
@@ -86,7 +75,7 @@ export class BotUiService {
         rows: [
           [
             { text: '➕ Новая задача', command: '/new' },
-            { text: '📋 Мои задачи', command: '/tasks' },
+            this.tasksButton(),
           ],
           [
             { text: '✅ Выполненные', command: '/done' },
@@ -111,6 +100,7 @@ export class BotUiService {
       replyKeyboard: {
         rows: [
           [{ text: '➕ Новая задача', command: '/new' }],
+          [this.tasksButton()],
           [this.allActionsButton()],
         ],
       },
@@ -129,6 +119,20 @@ export class BotUiService {
           [{ text: '📤 Экспортировать все задачи в JSON', command: '/export' }],
           [{ text: '⚙️ Настроить вид меню', command: '/settings' }],
           [{ text: 'ℹ️ Помощь по работе с ToDo Bot', command: '/help' }],
+        ],
+      },
+    };
+  }
+
+  private tasksButton(): KeyboardButton {
+    return {
+      text: '📋 Просмотр задач',
+      command: '/tasks',
+      children: {
+        rows: [
+          [{ text: '📋 Активные задачи', command: '/tasks' }],
+          [{ text: '✅ Выполненные задачи', command: '/done' }],
+          [{ text: '🔄 Обновить активные задачи', command: 'tasks:refresh' }],
         ],
       },
     };
